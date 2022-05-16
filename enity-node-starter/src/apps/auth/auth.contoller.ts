@@ -49,6 +49,8 @@ export const login = async (req: Request, res: Response) => {
   for (const post of userPosts) {
     Object.keys(req.cookies).map(async (value) => {
       const postId = parseInt(value);
+
+      //check if the post is by the user who logged in
       if (post.postId !== postId) {
         await prisma.user.update({
           where: {
