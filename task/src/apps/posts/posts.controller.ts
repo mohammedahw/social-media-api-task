@@ -211,7 +211,7 @@ export const likePost = async (req: Request, res: Response) => {
       where: {
         id: reqUser.id,
       },
-      include: { likedPosts: true },
+      include: { likedPosts: true, Posts: true },
     });
 
     if (!user) return res.json("unauthorized");
@@ -226,8 +226,8 @@ export const likePost = async (req: Request, res: Response) => {
 
     let isLikedByUser: boolean = false;
 
-    user.likedPosts.forEach((p) => {
-      if (p.userId === post.userId) isLikedByUser = true;
+    user.Posts.forEach((p) => {
+      if (p.userId === reqUser.id) isLikedByUser = true;
     });
 
     if (isLikedByUser) return res.json("you cant like your own post");
